@@ -58,6 +58,26 @@ class LinkedList
     false
   end
 
+  def insert_at(value, index)
+    return prepend(value) if index.zero?
+    return if index > @size
+
+    previous_node = at(index - 1)
+    new_node = Node.new(value, at(index))
+    previous_node.next_node = new_node
+    @size += 1
+  end
+
+  def remove_at(index)
+    return if index >= @size
+
+    pre_removal_node = at(index - 1)
+    post_removal_node = at(index + 1)
+    pre_removal_node.next_node = post_removal_node
+
+    @size -= 1
+  end
+
   def to_s
     values = ''
     current_node = @head
@@ -88,5 +108,10 @@ list.prepend(0)
 list.append(3)
 list.prepend(-1)
 list.to_s
-list.pop
+list.insert_at('A', 0)
 list.to_s
+list.insert_at('A', 1)
+list.to_s
+list.remove_at(3)
+list.to_s
+puts list.size
